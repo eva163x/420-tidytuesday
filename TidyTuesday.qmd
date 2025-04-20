@@ -1,0 +1,56 @@
+---
+title: "TidyTuesday_420"
+author: "Eva Aggarwal"
+format: pdf
+editor: visual
+---
+
+## Loading Data
+
+```{r}
+# Option 2: Read directly from GitHub
+
+daily_accidents <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-04-22/daily_accidents.csv')
+daily_accidents_420 <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-04-22/daily_accidents_420.csv')
+```
+
+Questions:
+
+-   Can you detect any correlations between fatal car crashes and particular days of the year?
+
+-   What are the most dangerous days of the year for fatal car crashes in the United States?
+
+-   What other factors might help analyze the data in more detail? You can use the cleaning script to download the full dataset.
+
+Instructions:
+
+-   [Explore the data](https://r4ds.hadley.nz/), watching out for interesting relationships. We would like to emphasize that you should not draw conclusions about **causation** in the data. There are various moderating variables that affect all data, many of which might not have been captured in these datasets. As such, our suggestion is to use the data provided to practice your data tidying and plotting techniques, and to consider for yourself what nuances might underlie these relationships.
+
+-   Create a visualization, a model, a [Quarto](https://quarto.org/) report, a [shiny app](https://shiny.posit.co/), or some other piece of data-science-related output, using R, Python, or another programming language.
+
+-   [Share your output and the code used to generate it](https://github.com/eva163x/tidytuesday/blob/main/sharing.md) on social media with the #TidyTuesday hashtag.
+
+```{r}
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+
+daily_accidents <- daily_accidents |>
+  mutate(day_of_year = yday(as.Date(date)))
+
+avg_fatalities_by_day <- daily_accidents |>
+  group_by(day_of_year) |>
+  summarize(avg_fatalities = mean(fatalities_count, na.rm = TRUE))
+
+ggplot(avg_fatalities_by_day, aes(x = day_of_year, y = avg_fatalities)) +
+  geom_line() +
+    geom_vline(xintercept = 110, linetype = "dashed", color = "red", size = 1) +
+   annotate("text", x = 110, y = max(avg_fatalities_by_day$avg_fatalities) + 5, 
+           label = "4/20", color = "red", angle = 90, vjust = -0.5) +
+  labs(
+    title = "Average Fatalities by Day of the Year",
+    x = "Day of the Year",
+    y = "Average Fatalities"
+  ) +
+  theme_minimal()
+```
