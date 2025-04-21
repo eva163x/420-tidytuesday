@@ -14,22 +14,6 @@ daily_accidents <- readr::read_csv('https://raw.githubusercontent.com/rfordatasc
 daily_accidents_420 <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-04-22/daily_accidents_420.csv')
 ```
 
-Questions:
-
--   Can you detect any correlations between fatal car crashes and particular days of the year?
-
--   What are the most dangerous days of the year for fatal car crashes in the United States?
-
--   What other factors might help analyze the data in more detail? You can use the cleaning script to download the full dataset.
-
-Instructions:
-
--   [Explore the data](https://r4ds.hadley.nz/), watching out for interesting relationships. We would like to emphasize that you should not draw conclusions about **causation** in the data. There are various moderating variables that affect all data, many of which might not have been captured in these datasets. As such, our suggestion is to use the data provided to practice your data tidying and plotting techniques, and to consider for yourself what nuances might underlie these relationships.
-
--   Create a visualization, a model, a [Quarto](https://quarto.org/) report, a [shiny app](https://shiny.posit.co/), or some other piece of data-science-related output, using R, Python, or another programming language.
-
--   [Share your output and the code used to generate it](https://github.com/eva163x/tidytuesday/blob/main/sharing.md) on social media with the #TidyTuesday hashtag.
-
 ```{r}
 library(dplyr)
 library(lubridate)
